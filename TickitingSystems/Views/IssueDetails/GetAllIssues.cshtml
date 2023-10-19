@@ -1,0 +1,76 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model List<TickitingSystems.Models.IssueDetailsModel>
+
+<html>
+<head>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+<style>
+    .container {
+        width: 100%;
+        padding-right: 0px;
+        padding-left: 0px;
+    }
+</style>
+
+</head>
+<body>
+    <h3 style="text-align:center">Get All Issues</h3>
+
+    <i class="fas fa-plus-circle"></i><a href="AddNewIssue"> Add New Issue</a>
+    <form asp-action="GetAllIssues">
+        <table class="table table-striped" >
+            <thead>
+                <tr>
+                    <th>Project Name</th>
+                    <th>Serverity Name </th>
+                    <th>Status Name</th>
+                    <th>Enviroment Type</th>
+                    <th> Description</th>
+                    <th>Created Date</th>
+                    <th>Resolved Date</th>
+                    <th>Closed Date</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (TickitingSystems.Models.IssueDetailsModel item in Model)
+                {
+                <tr>
+                    <td>@item.ProjectName</td>
+                    <td>@item.ServerityName</td>
+                    <td>@item.IssueStatusName</td>
+                    <td>@item.EnviromentType</td>
+                    <td>@item.IssueDescription</td>
+                    <td>@item.CreatedDate.ToString("dd-MM-yyyy")</td>
+                    @if (@item.ResolvedDate.HasValue)
+                    {
+                        <td>@item.ResolvedDate.Value.ToString("dd-MM-yyyy")</td>
+                    }
+                    else
+                    {
+                        <td></td>
+                    }
+                    @if (@item.ClosedDate.HasValue)
+                    {
+                        <td>@item.ClosedDate.Value.ToString("dd-MM-yyyy")</td>
+                    }
+                    else
+                    {
+                        <td></td>
+                    }
+                    <td>
+                        <a asp-controller="IssueDetails" asp-action="EditIssueDetails" asp-route-Id="@item.IssueDetailsId" class="fas fa-edit"></a>
+                        <a asp-controller="IssueDetails" asp-action="ViewLogTransaction" asp-route-ID="@item.IssueDetailsId" class="fas fa-history"></a>
+                    </td>
+                </tr>
+                }
+            </tbody>
+        </table>
+    </form>
+
+</body>
+</html>

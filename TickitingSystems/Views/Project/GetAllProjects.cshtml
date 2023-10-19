@@ -1,0 +1,54 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model List<TickitingSystems.Models.ProjectModel>
+
+<html>
+<head>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+</head>
+<body>
+    <h3>Get All Projects</h3>
+    <a href="AddNewProject">Add New Project</a>
+    <form asp-action="GetAllProjects">
+        <table class="table table-striped" style="width:100%">
+            <thead>
+                <tr>
+                    <th>Project Name</th>
+                    <th>Client Contact Person</th>
+                    <th>Client Name</th>
+                    <th>Deliver Date</th>
+                    <th>Is Under Support</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (TickitingSystems.Models.ProjectModel item in Model)
+                {
+                    <tr>
+                        <td>@item.ProjectName</td>
+                        <td>@item.ContactPerson</td>
+                        <td>@item.ClientName</td>
+                        <td>@item.DeliverDate.ToString("dd-MM-yyyy")</td>
+                        
+                        @if (item.IsUnderSupport)
+                        {
+                            <td>Yes</td>
+                        }
+                        else
+                        { 
+                            <td>No</td>
+                        }
+                    <td>
+                        <a asp-controller="Project" asp-action="EditProject" asp-route-ID="@item.ProjectId" class="fas fa-edit"></a>
+                    </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </form>
+
+</body>
+</html> 
